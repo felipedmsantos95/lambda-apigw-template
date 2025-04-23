@@ -1,0 +1,22 @@
+service: lambda-apigw-template
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-1
+  stage: ${opt:stage, 'local'}
+
+functions:
+  api:
+    handler: dist/lambda.lambdaHandler
+    events:
+      - http:
+          path: /
+          method: get
+
+plugins:
+  - serverless-offline
+
+package:
+  individually: true
+  excludeDevDependencies: true
